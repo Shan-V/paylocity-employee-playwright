@@ -1,9 +1,6 @@
 # Paylocity Employee Playwright
 
-![GitHub](https://img.shields.io/github/license/Shan-V/paylocity-employee-playwright)
-![GitHub last commit](https://img.shields.io/github/last-commit/Shan-V/paylocity-employee-playwright)
-
-This repository contains automated tests for the Paylocity Benefits Dashboard using Playwright. The tests focus on validating the functionality of adding employees, including edge cases like invalid dependent counts.
+This repository contains automated tests for the Paylocity Benefits Dashboard using Playwright. The tests validate various functionalities such as adding new employees and handling edge cases related to dependent counts.
 
 ## Table of Contents
 
@@ -12,6 +9,7 @@ This repository contains automated tests for the Paylocity Benefits Dashboard us
 - [Running Tests](#running-tests)
 - [Test Scenarios](#test-scenarios)
 - [Configuration](#configuration)
+- [Customizing Username and Password](#customizing-username-and-password)
 - [Logging & Reporting](#logging--reporting)
 
 ## Installation
@@ -41,7 +39,7 @@ npm install
 
 You can run the tests in both headless and headed modes. The following npm scripts are available:
 
-### Default (Headless) Mode
+### Default (Headed) Mode
 
 ```bash
 npm test
@@ -65,6 +63,36 @@ The Playwright configuration is defined in `playwright.config.ts`:
 - **Retries**: Configurable retry logic for handling flaky tests.
 - **Projects**: Different configurations for setup and testing environments (e.g., `chromium` with and without a headless mode).
 - **Trace**: Tracing is enabled on the first retry to capture detailed execution logs for debugging.
+
+## Customizing Username and Password
+
+If you want to run the tests using your own username and password, you will need to update the credentials in the `SessionManager.ts` file. This file is responsible for managing the authentication process during the tests.
+
+### How to Update Credentials
+
+1. **Locate the File**: Navigate to the `SessionManager.ts` file in your project directory:
+   ```bash
+   common/utils/SessionManager.ts
+   ```
+
+2. **Update the Credentials**:
+   - Open the `SessionManager.ts` file.
+   - Look for the method named `loginAndSaveAuthState`. This method currently uses hardcoded credentials for logging in.
+   - Replace the existing username and password with your own.
+
+Here’s the relevant code snippet that you need to update:
+
+```typescript
+private async loginAndSaveAuthState(page: Page): Promise<void> {
+    const loginPage = new LoginPage(page);
+    await loginPage.login("TestUser407", "k*@#^00}$5x*"); // Replace these credentials with your own
+    await page.waitForURL(/\/Prod\/Benefits/);
+    logger.info('Login successful.');
+}
+```
+
+- **`"TestUser407"`**: Replace this with your username.
+- **`"k*@#^00}$5x*"`**: Replace this with your password.
 
 ## Logging & Reporting
 
