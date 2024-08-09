@@ -1,0 +1,18 @@
+{
+  "name": "paylocity-employee-playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "test:dev1": "cross-env NODE_ENV=dev1 yarn playwright test",
+  "test:nastg": "cross-env NODE_ENV=nastg yarn playwright test",
+  "test:stg1": "cross-env NODE_ENV=stg1 yarn playwright test",
+  "show-report": "yarn playwright show-report",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.46.0",
+    "@types/node": "^22.1.0",
+    "winston": "^3.13.0"
+  }
+}
